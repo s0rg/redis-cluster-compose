@@ -5,5 +5,8 @@ Any-node redis cluster in a single docker-compose.
 - edit `nodes` argument for `cluster-up.sh`
 - `docker-compose up` - start your cluster!
 
+note: nodes names (`redis_node_N`) are important, if you want/need to change them,
+dont forget to modify `node_name` function in `cluster-up.sh` accordingly.
+
 # license
 MIT

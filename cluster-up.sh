@@ -9,8 +9,6 @@ ALIVE_COUNT="$(redis-cli -h $(node_name 1) -p $PORT cluster nodes | grep -c 'con
 
 if [ "$ALIVE_COUNT" -eq "$NODES_COUNT" ]; then  # cluster ready
     echo "[*] your $NODES_COUNT-node(s) redis-cluster is ready"
-    echo
-    sleep 5
     exit 0
 fi
 
