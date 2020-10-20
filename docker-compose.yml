@@ -1,0 +1,104 @@
+version: "3"
+services:
+
+  redis_node_1: &redis_node
+    image: redis:6-alpine
+    restart: always
+    logging:
+        driver: "none"
+    volumes:
+      - node_1:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+    command:
+      - "redis-server"
+      - "/etc/redis.conf"
+   
+  redis_node_2:
+    <<: *redis_node
+    volumes:
+      - node_2:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  redis_node_3:
+    <<: *redis_node
+    volumes:
+      - node_3:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  redis_node_4:
+    <<: *redis_node
+    volumes:
+      - node_4:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  redis_node_5:
+    <<: *redis_node
+    volumes:
+      - node_5:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  redis_node_6:
+    <<: *redis_node
+    volumes:
+      - node_6:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  redis_node_7:
+    <<: *redis_node
+    volumes:
+      - node_7:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  redis_node_8:
+    <<: *redis_node
+    volumes:
+      - node_8:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  redis_node_9:
+    <<: *redis_node
+    volumes:
+      - node_9:/data
+      - ./conf/redis.conf:/etc/redis.conf:ro
+
+  cluster_up:
+    image: redis:6-alpine
+    restart: on-failure
+    links:
+      - redis_node_1
+      - redis_node_2
+      - redis_node_3
+      - redis_node_4
+      - redis_node_5
+      - redis_node_6
+      - redis_node_7
+      - redis_node_8
+      - redis_node_9
+    depends_on:
+      - redis_node_1
+      - redis_node_2
+      - redis_node_3
+      - redis_node_4
+      - redis_node_5
+      - redis_node_6
+      - redis_node_7
+      - redis_node_8
+      - redis_node_9
+    volumes:
+      - ./cluster-up.sh:/usr/local/bin/cluster-up.sh:ro
+    command:
+      - "cluster-up.sh"
+      - "6379" # port
+      - "9"    # nodes
+
+volumes:
+  node_1:
+  node_2:
+  node_3:
+  node_4:
+  node_5:
+  node_6:
+  node_7:
+  node_8:
+  node_9:
+
