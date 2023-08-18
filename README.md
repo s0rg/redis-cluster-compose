@@ -22,7 +22,7 @@ docker compose up
 
 This scheme was made by [decompose](https://github.com/s0rg/decompose) tool:
 
-![svg](/blob/main/redis-cluster.svg)
+![svg](redis-cluster.svg)
 
 
 # license
