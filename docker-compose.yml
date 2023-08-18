@@ -2,17 +2,15 @@ version: "3"
 services:
 
   redis_node_1: &redis_node
-    image: redis:6-alpine
+    image: redis:7-alpine
     restart: always
-    logging:
-        driver: "none"
     volumes:
       - node_1:/data
       - ./conf/redis.conf:/etc/redis.conf:ro
     command:
       - "redis-server"
       - "/etc/redis.conf"
-   
+
   redis_node_2:
     <<: *redis_node
     volumes:
@@ -62,7 +60,7 @@ services:
       - ./conf/redis.conf:/etc/redis.conf:ro
 
   cluster_up:
-    image: redis:6-alpine
+    image: redis:7-alpine
     restart: on-failure
     links:
       - redis_node_1
@@ -87,9 +85,9 @@ services:
     volumes:
       - ./cluster-up.sh:/usr/local/bin/cluster-up.sh:ro
     command:
-      - "cluster-up.sh"
+      - "/usr/local/bin/cluster-up.sh"
       - "6379" # port
-      - "9"    # nodes
+      - "9"    # nodes count
 
 volumes:
   node_1:
@@ -101,4 +99,3 @@ volumes:
   node_7:
   node_8:
   node_9:
-
